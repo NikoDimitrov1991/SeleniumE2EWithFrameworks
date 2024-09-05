@@ -1,6 +1,4 @@
-import PageObjects.CartPage;
-import PageObjects.LandingPage;
-import PageObjects.ProductCatalogue;
+import PageObjects.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,24 +27,15 @@ public class StandAloneTest {
         productCatalogue.addProductToCart(productName);
         CartPage cartPage = productCatalogue.goToCartPage();
         cartPage.verifyProductDisplay(productName);
+
         Boolean match = cartPage.verifyProductDisplay(productName);
         org.testng.Assert.assertTrue(match);
+        CheckoutPage checkoutPage = cartPage.goToCheckout();
+        checkoutPage.selectCountry("Bulgaria");
+        ConfirmationPage confirmationPage = checkoutPage.submitOrder();
 
-
-        driver.findElement(By.cssSelector(".totalRow button")).click();
-
-
-        WebElement countryInput = driver.findElement(By.cssSelector("input[placeholder='Select Country']"));
-        countryInput.click();
-        countryInput.sendKeys("Bulgaria");
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
-
-        driver.findElement(By.xpath("(//span[@class='ng-star-inserted'])[1]")).click();
-        driver.findElement(By.xpath("//a[normalize-space()='Place Order']")).click();
-
-        String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
-        org.testng.Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
+        String confirmMassage = confirmationPage.verifyConfirmationMessage();
+        org.testng.Assert.assertTrue(confirmMassage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
         driver.close();
     }
 }
