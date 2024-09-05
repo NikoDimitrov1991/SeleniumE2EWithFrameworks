@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 
 import java.time.Duration;
 import java.util.List;
@@ -27,19 +25,13 @@ public class StandAloneTest {
         landingPage.goTo();
         landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
 
-
         ProductCatalogue productCatalogue = new ProductCatalogue(driver);
-        productCatalogue.getProductList();
+        List<WebElement> products = productCatalogue.getProductList();
+        productCatalogue.addProductToCart(productName);
 
 
 
 
-        WebElement prod = products.stream().filter(product -> product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
-        prod.findElement(By.cssSelector(".card-body button:last-of-type")).click();
-
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
         driver.findElement(By.xpath("//button[@routerlink='/dashboard/cart']")).click();
 
         List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartSection h3"));
