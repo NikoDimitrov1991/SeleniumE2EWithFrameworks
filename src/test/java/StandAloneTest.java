@@ -28,6 +28,7 @@ public class StandAloneTest {
         ProductCatalogue productCatalogue = new ProductCatalogue(driver);
         List<WebElement> products = productCatalogue.getProductList();
         productCatalogue.addProductToCart(productName);
+        productCatalogue.goToCartPage();
 
 
 
