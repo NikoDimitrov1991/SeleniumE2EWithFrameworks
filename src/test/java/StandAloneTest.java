@@ -1,3 +1,4 @@
+import PageObjects.CartPage;
 import PageObjects.LandingPage;
 import PageObjects.ProductCatalogue;
 import org.openqa.selenium.By;
@@ -23,22 +24,15 @@ public class StandAloneTest {
 
         LandingPage landingPage = new LandingPage(driver);
         landingPage.goTo();
-        landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
-
-        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+        ProductCatalogue productCatalogue = landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
         List<WebElement> products = productCatalogue.getProductList();
         productCatalogue.addProductToCart(productName);
-        productCatalogue.goToCartPage();
-
-
-
-
-        driver.findElement(By.xpath("//button[@routerlink='/dashboard/cart']")).click();
-
-        List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartSection h3"));
-
-        Boolean match = cartProducts.stream().anyMatch(cartProduct -> cartProduct.getText().equalsIgnoreCase(productName));
+        CartPage cartPage = productCatalogue.goToCartPage();
+        cartPage.verifyProductDisplay(productName);
+        Boolean match = cartPage.verifyProductDisplay(productName);
         org.testng.Assert.assertTrue(match);
+
+
         driver.findElement(By.cssSelector(".totalRow button")).click();
 
 

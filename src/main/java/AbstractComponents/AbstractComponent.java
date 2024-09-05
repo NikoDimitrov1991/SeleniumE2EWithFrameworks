@@ -1,5 +1,6 @@
 package AbstractComponents;
 
+import PageObjects.CartPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,8 +37,11 @@ public class AbstractComponent {
     }
 
 
-    public void goToCartPage() {
+    public CartPage goToCartPage() {
         cartHeader.click();
+        CartPage cartPage = new CartPage(driver);
+        return cartPage;
+
     }
 
 }
