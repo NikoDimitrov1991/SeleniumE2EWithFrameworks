@@ -1,4 +1,5 @@
 import PageObjects.LandingPage;
+import PageObjects.ProductCatalogue;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,9 +27,12 @@ public class StandAloneTest {
         landingPage.goTo();
         landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
-        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
+
+        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+        productCatalogue.getProductList();
+
+
+
 
         WebElement prod = products.stream().filter(product -> product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
         prod.findElement(By.cssSelector(".card-body button:last-of-type")).click();
