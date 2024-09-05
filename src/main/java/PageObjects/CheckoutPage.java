@@ -37,10 +37,9 @@ public class CheckoutPage extends AbstractComponent {
 
 
     public ConfirmationPage submitOrder() {
-    submit.click();
-    return new ConfirmationPage(driver);
+        submit.click();
+        return new ConfirmationPage(driver);
     }
-
 
 
 //    public void selectCountry(String country) {

@@ -28,7 +28,7 @@ public class CartPage extends AbstractComponent {
     }
 
 
-    public CheckoutPage goToCheckout(){
+    public CheckoutPage goToCheckout() {
         checkoutEle.click();
         return new CheckoutPage(driver);
     }

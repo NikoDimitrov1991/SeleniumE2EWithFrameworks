@@ -19,16 +19,13 @@ public class AbstractComponent {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//button[@routerlink='/dashboard/cart']")
+    @FindBy(css = "[routerlink*='cart']")
     WebElement cartHeader;
 
     public void waitForElementToAppear(By findBy) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
-
-
-
 
 
     public void waitForElementToDisappear(WebElement element) {

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ConfirmationPage extends AbstractComponent {
     WebDriver driver;
+
     public ConfirmationPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -19,6 +20,6 @@ public class ConfirmationPage extends AbstractComponent {
 
 
     public String verifyConfirmationMessage() {
-       return confirmationMessage.getText();
+        return confirmationMessage.getText();
     }
 }
