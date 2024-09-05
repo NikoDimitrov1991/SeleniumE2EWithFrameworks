@@ -21,7 +21,6 @@ public class StandAloneTest {
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-//      driver.get("https://rahulshettyacademy.com/client/");
 
         LandingPage landingPage = new LandingPage(driver);
         landingPage.goTo();
@@ -57,6 +56,6 @@ public class StandAloneTest {
 
         String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
         org.testng.Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
-       // driver.close();
+        driver.close();
     }
 }
