@@ -10,7 +10,6 @@ public class LandingPage extends AbstractComponent {
 
     WebDriver driver;
 
-    //PageFactory Design Pattern
     public LandingPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -31,8 +30,7 @@ public class LandingPage extends AbstractComponent {
         userEmail.sendKeys(email);
         userPassword.sendKeys(password);
         submit.click();
-        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
-        return productCatalogue;
+        return new ProductCatalogue(driver);
     }
 
     public void goTo() {

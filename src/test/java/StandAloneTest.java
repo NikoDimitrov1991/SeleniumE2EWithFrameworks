@@ -1,13 +1,11 @@
 import PageObjects.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
+
 
 
 public class StandAloneTest {
@@ -22,9 +20,7 @@ public class StandAloneTest {
 
         LandingPage landingPage = new LandingPage(driver);
         landingPage.goTo();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         ProductCatalogue productCatalogue = landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
-        List<WebElement> products = productCatalogue.getProductList();
         productCatalogue.addProductToCart(productName);
         CartPage cartPage = productCatalogue.goToCartPage();
         cartPage.verifyProductDisplay(productName);
@@ -36,7 +32,7 @@ public class StandAloneTest {
         ConfirmationPage confirmationPage = checkoutPage.submitOrder();
 
         String confirmMassage = confirmationPage.verifyConfirmationMessage();
-        org.testng.Assert.assertTrue(confirmMassage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
-        driver.close();
+        org.testng.Assert.assertTrue(confirmMassage.equalsIgnoreCase("THANKYOU FOR THE ORDER."),"The confirmation message does not match the expected value.");
+        driver.quit();
     }
 }
