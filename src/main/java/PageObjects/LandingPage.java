@@ -33,8 +33,9 @@ public class LandingPage extends AbstractComponent {
         return new ProductCatalogue(driver);
     }
 
-    public void goTo() {
-        driver.get("https://rahulshettyacademy.com/client/");
+    public void goTo()
+    {
+        driver.get("https://rahulshettyacademy.com/client");
     }
 
 }

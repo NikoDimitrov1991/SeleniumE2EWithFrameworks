@@ -1,24 +1,20 @@
 import PageObjects.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import TestComponents.BaseTest;
+import org.testng.annotations.Test;
 
-import java.time.Duration;
+import java.io.IOException;
 
 
-public class TestUsingPageObject {
-    public static void main(String[] args) throws InterruptedException {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-search-engine-choice-screen");
+
+public class TestUsingPageObject extends BaseTest {
+    @Test
+    public void submitOrder() throws IOException, InterruptedException {
+
 
         String productName = "ZARA COAT 3";
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-
-        LandingPage landingPage = new LandingPage(driver);
-        landingPage.goTo();
+        LandingPage landingPage = launchApplication();
         ProductCatalogue productCatalogue = landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
+
         productCatalogue.addProductToCart(productName);
         CartPage cartPage = productCatalogue.goToCartPage();
         cartPage.verifyProductDisplay(productName);
@@ -30,7 +26,8 @@ public class TestUsingPageObject {
         ConfirmationPage confirmationPage = checkoutPage.submitOrder();
 
         String confirmMassage = confirmationPage.verifyConfirmationMessage();
-        org.testng.Assert.assertTrue(confirmMassage.equalsIgnoreCase("THANKYOU FOR THE ORDER."),"The confirmation message does not match the expected value.");
+        org.testng.Assert.assertTrue(confirmMassage.equalsIgnoreCase("THANKYOU FOR THE ORDER."), "The confirmation message does not match the expected value.");
         driver.quit();
     }
 }
+
