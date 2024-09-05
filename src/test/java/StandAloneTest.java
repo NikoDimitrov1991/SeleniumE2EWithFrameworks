@@ -17,19 +17,16 @@ public class StandAloneTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-search-engine-choice-screen");
 
-
+        String productName = "ZARA COAT 3";
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        driver.get("https://rahulshettyacademy.com/client/");
+//      driver.get("https://rahulshettyacademy.com/client/");
 
         LandingPage landingPage = new LandingPage(driver);
+        landingPage.goTo();
+        landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
 
-
-        String productName = "ZARA COAT 3";
-        driver.findElement(By.id("userEmail")).sendKeys("ndnikolaydimitrov@gmail.com");
-        driver.findElement(By.id("userPassword")).sendKeys("Test123!");
-        driver.findElement(By.id("login")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
         List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
@@ -40,7 +37,7 @@ public class StandAloneTest {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
-        driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
+        driver.findElement(By.xpath("//button[@routerlink='/dashboard/cart']")).click();
 
         List<WebElement> cartProducts = driver.findElements(By.cssSelector(".cartSection h3"));
 
@@ -60,6 +57,6 @@ public class StandAloneTest {
 
         String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
         org.testng.Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
-        driver.close();
+       // driver.close();
     }
 }
