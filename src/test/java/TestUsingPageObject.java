@@ -2,17 +2,15 @@ import PageObjects.*;
 import TestComponents.BaseTest;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 
 
 
 public class TestUsingPageObject extends BaseTest {
     @Test
-    public void submitOrder() throws IOException, InterruptedException {
+    public void submitOrder() throws InterruptedException {
 
 
         String productName = "ZARA COAT 3";
-        LandingPage landingPage = launchApplication();
         ProductCatalogue productCatalogue = landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
 
         productCatalogue.addProductToCart(productName);
@@ -27,7 +25,6 @@ public class TestUsingPageObject extends BaseTest {
 
         String confirmMassage = confirmationPage.verifyConfirmationMessage();
         org.testng.Assert.assertTrue(confirmMassage.equalsIgnoreCase("THANKYOU FOR THE ORDER."), "The confirmation message does not match the expected value.");
-        driver.quit();
     }
 }
 

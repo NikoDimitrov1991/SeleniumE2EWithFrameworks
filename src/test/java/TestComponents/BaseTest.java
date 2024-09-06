@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,8 +30,8 @@ public class BaseTest {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--disable-search-engine-choice-screen");
 
-        driver = new ChromeDriver(options);}
-        else if (browserName.equalsIgnoreCase("firefox")) {
+            driver = new ChromeDriver(options);
+        } else if (browserName.equalsIgnoreCase("firefox")) {
             FirefoxOptions options = new FirefoxOptions();
             options.addArguments("--disable-search-engine-choice-screen");
             driver = new FirefoxDriver(options);
@@ -39,14 +41,18 @@ public class BaseTest {
         return driver;
     }
 
-    public LandingPage launchApplication() throws IOException
-    {
-
+    @BeforeMethod
+    public LandingPage launchApplication() throws IOException {
         driver = initializeDriver();
         landingPage = new LandingPage(driver);
         landingPage.goTo();
         return landingPage;
 
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
     }
 
 }
