@@ -40,16 +40,5 @@ public class CheckoutPage extends AbstractComponent {
         submit.click();
         return new ConfirmationPage(driver);
     }
-
-
-//    public void selectCountry(String country) {
-//        WebElement countryInput = driver.findElement(By.cssSelector("input[placeholder='Select Country']"));
-//        countryInput.click();
-//        countryInput.sendKeys("Bulgaria");
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
-//
-//        driver.findElement(By.xpath("(//span[@class='ng-star-inserted'])[1]")).click();
-//    }
-
-
 }
+
