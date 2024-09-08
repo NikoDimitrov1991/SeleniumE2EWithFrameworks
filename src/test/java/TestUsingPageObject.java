@@ -4,21 +4,23 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+
 
 public class TestUsingPageObject extends BaseTest {
     String productName = "ZARA COAT 3";
 
-    @Test (dataProvider="getData", groups = {"Purchase"})
-    public void submitOrder(String email, String password, String productName) throws InterruptedException {
+    @Test(dataProvider = "getData", groups = {"Purchase"})
+    public void submitOrder(HashMap<String,String> input) throws InterruptedException {
 
 
-        ProductCatalogue productCatalogue = landingPage.loginApplication(email,password);
+        ProductCatalogue productCatalogue = landingPage.loginApplication(input.get("email"), input.get("password"));
 
-        productCatalogue.addProductToCart(productName);
+        productCatalogue.addProductToCart(input.get("product"));
         CartPage cartPage = productCatalogue.goToCartPage();
-        cartPage.verifyProductDisplay(productName);
+        cartPage.verifyProductDisplay(input.get("product"));
 
-        Boolean match = cartPage.verifyProductDisplay(productName);
+        Boolean match = cartPage.verifyProductDisplay(input.get("product"));
         org.testng.Assert.assertTrue(match);
         CheckoutPage checkoutPage = cartPage.goToCheckout();
         checkoutPage.selectCountry("Bulgaria");
@@ -32,12 +34,27 @@ public class TestUsingPageObject extends BaseTest {
     public void orderHistoryTest() {
         ProductCatalogue productCatalogue = landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
         OrderPage orderPage = productCatalogue.goToOrdersPage();
-       Assert.assertTrue( orderPage.VerifyOrderDisplay(productName));
+        Assert.assertTrue(orderPage.VerifyOrderDisplay(productName));
     }
 
     @DataProvider
-    public Object[][] getData(){
-        return new Object [][] {{"ndnikolaydimitrov@gmail.com","Test123!", "ZARA COAT 3"},{"nikolay.dimitrov@delasport.com", "Test1233", "ADIDAS ORIGINAL"}};
+    public Object[][] getData() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("email", "ndnikolaydimitrov@gmail.com");
+        map.put("password", "Test123!");
+        map.put("product", "ZARA COAT 3");
+
+        HashMap<String, String> map1 = new HashMap<>();
+        map1.put("email", "nikolay.dimitrov@delasport.com");
+        map1.put("password", "Test1233");
+        map1.put("product", "ADIDAS ORIGINAL");
+
+        return new Object[][]{{map}, {map1}};
     }
+
+//    @DataProvider
+//    public Object[][] getData() {
+//        return new Object[][]{{"ndnikolaydimitrov@gmail.com", "Test123!", "ZARA COAT 3"}, {"nikolay.dimitrov@delasport.com", "Test1233", "ADIDAS ORIGINAL"}};
+//    }
 }
 
