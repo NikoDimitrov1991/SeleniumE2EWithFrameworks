@@ -1,17 +1,18 @@
 import PageObjects.*;
 import TestComponents.BaseTest;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
 public class TestUsingPageObject extends BaseTest {
     String productName = "ZARA COAT 3";
 
-    @Test
-    public void submitOrder() throws InterruptedException {
+    @Test (dataProvider="getData", groups = {"Purchase"})
+    public void submitOrder(String email, String password, String productName) throws InterruptedException {
 
 
-        ProductCatalogue productCatalogue = landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
+        ProductCatalogue productCatalogue = landingPage.loginApplication(email,password);
 
         productCatalogue.addProductToCart(productName);
         CartPage cartPage = productCatalogue.goToCartPage();
@@ -32,6 +33,11 @@ public class TestUsingPageObject extends BaseTest {
         ProductCatalogue productCatalogue = landingPage.loginApplication("ndnikolaydimitrov@gmail.com", "Test123!");
         OrderPage orderPage = productCatalogue.goToOrdersPage();
        Assert.assertTrue( orderPage.VerifyOrderDisplay(productName));
+    }
+
+    @DataProvider
+    public Object[][] getData(){
+        return new Object [][] {{"ndnikolaydimitrov@gmail.com","Test123!", "ZARA COAT 3"},{"nikolay.dimitrov@delasport.com", "Test1233", "ADIDAS ORIGINAL"}};
     }
 }
 
