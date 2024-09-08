@@ -4,7 +4,10 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class TestUsingPageObject extends BaseTest {
@@ -38,23 +41,32 @@ public class TestUsingPageObject extends BaseTest {
     }
 
     @DataProvider
-    public Object[][] getData() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("email", "ndnikolaydimitrov@gmail.com");
-        map.put("password", "Test123!");
-        map.put("product", "ZARA COAT 3");
-
-        HashMap<String, String> map1 = new HashMap<>();
-        map1.put("email", "nikolay.dimitrov@delasport.com");
-        map1.put("password", "Test1233");
-        map1.put("product", "ADIDAS ORIGINAL");
-
-        return new Object[][]{{map}, {map1}};
+    public Object[][] getData() throws IOException {
+        List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "Data" + File.separator + "PurchaseOrder.json");
+        return new Object[][]{{data.get(0)}, {data.get(1)}};
     }
+
 
 //    @DataProvider
 //    public Object[][] getData() {
 //        return new Object[][]{{"ndnikolaydimitrov@gmail.com", "Test123!", "ZARA COAT 3"}, {"nikolay.dimitrov@delasport.com", "Test1233", "ADIDAS ORIGINAL"}};
+//    }
+
+
+//    @DataProvider
+//    public Object[][] getData() throws IOException {
+//        HashMap<String, String> map = new HashMap<>();
+//        map.put("email", "ndnikolaydimitrov@gmail.com");
+//        map.put("password", "Test123!");
+//        map.put("product", "ZARA COAT 3");
+//
+//        HashMap<String, String> map1 = new HashMap<>();
+//        map1.put("email", "nikolay.dimitrov@delasport.com");
+//        map1.put("password", "Test1233");
+//        map1.put("product", "ADIDAS ORIGINAL");
+//
+//        List<HashMap<String,String>> data = getJsonDataToMap("System.getProperty(\"user.dir\") + \"src/test/java/Data/PurchaseOrder.json\"");
+//        return new Object[][]{{map}, {map1}};
 //    }
 }
 
