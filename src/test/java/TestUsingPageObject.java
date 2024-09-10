@@ -1,5 +1,6 @@
 import PageObjects.*;
 import TestComponents.BaseTest;
+import TestComponents.Retry;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,7 +14,7 @@ import java.util.List;
 public class TestUsingPageObject extends BaseTest {
     String productName = "ZARA COAT 3";
 
-    @Test(dataProvider = "getData", groups = {"Purchase"})
+    @Test(dataProvider = "getData", groups = {"Purchase"}, retryAnalyzer = Retry.class)
     public void submitOrder(HashMap<String,String> input) throws InterruptedException {
 
 
