@@ -14,24 +14,22 @@ import com.aventstack.extentreports.Status;
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
     ExtentReports extent = ExtentReporterNG.getReportObject();
+    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>(); // Thread safe
 
     @Override
     public void onTestStart(ITestResult result) {
-        // TODO Auto-generated method stub
         test = extent.createTest(result.getMethod().getMethodName());
-
+        extentTest.set(test); // adds unique thread id
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        // TODO Auto-generated method stub
         test.log(Status.PASS, "Test passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        // TODO Auto-generated method stub
-        test.fail(result.getThrowable());
+        extentTest.get().fail(result.getThrowable());
         try {
             driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
         } catch (Exception e) {
@@ -45,7 +43,7 @@ public class Listeners extends BaseTest implements ITestListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        test.addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
+        extentTest.get().addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
     }
 
     @Override
